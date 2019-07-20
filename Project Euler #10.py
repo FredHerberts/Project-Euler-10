@@ -1,32 +1,21 @@
-import math
 import time
-
-primelist = [3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101]
-
-
-number = 1999999
-
+import math
 start = time.time()
+primelist= [2]
 
 def primefinder(number):
-    for y in range(103, number + 1,2):
-        prime = True
-        for x in primelist:
-            if y % x == 0:
-                prime = False
-                break
-            if x > math.sqrt(y):
-                break
-        if prime == True:
+    prime = [True] * (number+1)
+    for y in range(3,int(math.sqrt(number+1)),2):
+        if prime[y] == True:
             primelist.append(y)
+            for x in range(y*y, number + 1,y+y):
+                prime[x] = False
+    for x in range(y+2,number+1,2):
+        if prime[x] == True:
+            primelist.append(x)
 
+primefinder(2000000)
 
-primefinder(int(number))
-
-end = time.time()
-primelist.insert(0,2)
 print(sum(primelist))
+end = time.time()
 print(end - start)
-
-
-
